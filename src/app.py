@@ -1,6 +1,11 @@
 import streamlit as st
 from utils.ai_helper import generate_business_strategy
+from utils.export_helper import export_to_docx, export_to_pdf
 from datetime import datetime
+import base64
+import os
+
+# Custom CSS
 def inject_css():
     st.markdown("""
     <style>
@@ -20,6 +25,10 @@ def inject_css():
             background-color: #1d4ed8;
             transform: scale(1.05);
         }
+        .download-btn {
+            margin-top: 20px;
+            gap: 10px;
+        }
     </style>
     """, unsafe_allow_html=True)
 
@@ -27,8 +36,7 @@ inject_css()
 
 # App Interface
 st.title("🚀 AI Business Strategy Generator")
-# Change the subtitle to:
-st.markdown("Generate comprehensive business strategies powered by Google Gemma 7B")
+st.markdown("Generate comprehensive business strategies powered by Google Gemini")
 
 with st.form("strategy_form"):
     col1, col2 = st.columns(2)
@@ -90,10 +98,36 @@ if submitted:
         with tab2:
             st.code(strategy, language="markdown")
             
-        # Download feature
-        st.download_button(
-            label="📥 Download Strategy",
-            data=strategy,
-            file_name=f"{industry.replace(' ', '_')}_strategy.md",
-            mime="text/markdown"
-        )
+        # Export buttons
+        st.subheader("Export Options")
+        col1, col2 = st.columns(2)
+        
+        try:
+            with col1:
+                docx_path = export_to_docx(strategy)
+                with open(docx_path, "rb") as f:
+                    docx_bytes = f.read()
+                    st.download_button(
+                        label="📥 Download DOCX",
+                        data=docx_bytes,
+                        file_name=f"{industry.replace(' ', '_')}_strategy.docx",
+                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    )
+            
+            with col2:
+                pdf_path = export_to_pdf(strategy)
+                with open(pdf_path, "rb") as f:
+                    pdf_bytes = f.read()
+                    st.download_button(
+                        label="📥 Download PDF",
+                        data=pdf_bytes,
+                        file_name=f"{industry.replace(' ', '_')}_strategy.pdf",
+                        mime="application/pdf"
+                    )
+        
+        finally:
+            # Cleanup temporary files
+            if os.path.exists(docx_path):
+                os.remove(docx_path)
+            if os.path.exists(pdf_path):
+                os.remove(pdf_path)
