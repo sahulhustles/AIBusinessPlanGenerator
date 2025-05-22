@@ -1,0 +1,7 @@
+streamlit==1.32.2
+google-generativeai>=0.3.3
+python-dotenv==1.0.0
+python-dateutil==2.8.2
+python-docx==0.8.11
+pdfkit==1.0.0
+wkhtmltopdf==0.2
