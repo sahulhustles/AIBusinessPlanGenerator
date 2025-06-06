@@ -17,7 +17,8 @@ An AI-powered web application that helps you generate customized business strate
 
 ## 🖼️ Preview
 
-![App Screenshot](./preview.png) <!-- Replace with actual image path if needed -->
+![{9E989A24-217E-4D9D-88A6-4C454043F61A}](https://github.com/user-attachments/assets/9aa31d33-1747-4ad3-b909-31fa53c378ee)
+
 
 ---
 
