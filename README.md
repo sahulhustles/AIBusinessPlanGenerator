@@ -31,8 +31,8 @@
 
 ## 📸 Live Preview
 
-![App Preview](![{5D696062-3DAD-43CD-8DDF-90DE6DBDB8D8}](https://github.com/user-attachments/assets/4d201718-b96d-4b62-92d2-f94ad147b6a8)
-)
+[App Preview] ![{BC3DBD7C-79F9-445A-93BE-4B6F6517F7BD}](https://github.com/user-attachments/assets/1c1b3c81-49d7-4134-b850-526a4a5de794)
+
 
 ---
 
