@@ -22,25 +22,7 @@ An AI-powered web application that helps you generate customized business strate
 ---
 
 ## 📂 Folder Structure
-
-.
-├── .venv/ # Python virtual environment
-├── sampleStrategyPlans/ # Sample exported strategies
-│ ├── DOCS/
-│ └── PDFS/
-├── src/
-│ ├── data/
-│ ├── temp/
-│ ├── utils/
-│ │ ├── ai_helper.py # Handles Google Gemini prompts
-│ │ ├── config.py # Gemini API key config
-│ │ └── export_helper.py # Exports to PDF/DOCX
-│ └── app.py # Main Streamlit application
-├── .env # Environment variable (not pushed)
-├── requirements.txt # All dependencies
-├── style.css # Custom CSS styles
-└── README.md
----
+![image](https://github.com/user-attachments/assets/95ef5a26-a50a-41f1-ad3c-a269b7c650af)
 
 ## 🚀 How to Run This Project
 
