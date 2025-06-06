@@ -17,7 +17,8 @@ An AI-powered web application that helps you generate customized business strate
 
 ## 🖼️ Preview
 
-![App Screenshot](./preview.png) <!-- Replace with actual image path if needed -->
+![{9E989A24-217E-4D9D-88A6-4C454043F61A}](https://github.com/user-attachments/assets/9aa31d33-1747-4ad3-b909-31fa53c378ee)
+
 
 ---
 
@@ -44,44 +45,37 @@ cd AI-BusinessPlanGenerator
 #### 2. Create & Activate a Virtual Environment
 Windows:
 
-bash
-Copy
-Edit
 python -m venv .venv
 .\.venv\Scripts\activate
+
 macOS/Linux:
 
-bash
-Copy
-Edit
 python3 -m venv .venv
 source .venv/bin/activate
 
 #### 3. Install Required Libraries
-bash
-Copy
-Edit
+
 pip install -r requirements.txt
 
-#### 🔐 4. Set Up Environment Variables
-Inside the src/utils/ directory, create a .env file and add your Gemini API key like this:
+#### 4. Go to " https://aistudio.google.com/apikey " 
 
-env
-Copy
-Edit
+### - create a API Key , copy that key and place it Inside the src/utils/ directory at .env file.
+
+#### 🔐 5. Set Up Environment Variables
+
+Inside the src/utils/ directory, add your Gemini API key like this:
+
 GEMINI_API_KEY=your_gemini_api_key_here
 
 
-#### ▶️ 5. Run the Application
+#### ▶️ 6. Run the Application
 From the root folder (or inside src/), run:
 
-bash
-Copy
-Edit
 streamlit run src/app.py
+
 Then open the generated URL in your browser (usually http://localhost:8501).
 
-#### 6.📝 Export Functionality
+#### 7.📝 Export Functionality
 You can export generated business strategies to:
 
 📄 PDF (saved in /sampleStrategyPlans/PDFS)
@@ -107,6 +101,7 @@ sampleStrategyPlans/PDFS/*.pdf
 sampleStrategyPlans/DOCS/*.docx
 
 💡 Tech Stack
+
 Python 3.10
 
 Streamlit
