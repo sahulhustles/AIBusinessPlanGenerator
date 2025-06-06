@@ -5,3 +5,4 @@ python-dateutil
 python-docx
 pdfkit
 wkhtmltopdf
+fpdf
