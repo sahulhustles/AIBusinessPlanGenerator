@@ -49,6 +49,14 @@ inject_css()
 st.title("🚀 AI Business Plan Generator")
 st.markdown("Generate comprehensive business plans powered by Google Gemini")
 
+# Initialize session state variables
+if 'plan' not in st.session_state:
+    st.session_state.plan = None
+if 'business_name' not in st.session_state:
+    st.session_state.business_name = None
+if 'industry' not in st.session_state:
+    st.session_state.industry = None
+
 with st.form("business_form"):
     col1, col2 = st.columns(2)
     
@@ -78,9 +86,6 @@ with st.form("business_form"):
 
 if submitted:
     with st.spinner("🧠 Generating your business plan..."):
-        # Initialize paths
-        docx_path, pdf_path = None, None
-        
         try:
             prompt = f"""
             Create a comprehensive business plan for {business_name}, a {industry} company.
@@ -100,55 +105,69 @@ if submitted:
             """
             
             plan = generate_business_strategy(prompt)
+            st.session_state.plan = plan
+            st.session_state.business_name = business_name
+            st.session_state.industry = industry
             
-            # Display results
-            tab1, tab2 = st.tabs(["Business Plan", "Raw Output"])
-            
-            with tab1:
-                st.subheader(f"{business_name} Business Plan")
-                st.markdown(f"**Industry:** {industry}")
-                st.markdown(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-                st.divider()
-                st.markdown(plan.replace('\n', '\n\n'))
-                
-            with tab2:
-                st.code(plan, language="markdown")
-            
-            # Export section
-            st.subheader("Export Options")
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                docx_path = export_to_docx(plan, business_name.replace(" ", "_"))
-                with open(docx_path, "rb") as f:
-                    st.download_button(
-                        label="📥 Download DOCX",
-                        data=f,
-                        file_name=f"{business_name.replace(' ', '_')}_plan.docx",
-                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    )
-            
-            with col2:
-                pdf_path = export_to_pdf(plan, business_name.replace(" ", "_"))
-                with open(pdf_path, "rb") as f:
-                    st.download_button(
-                        label="📥 Download PDF",
-                        data=f,
-                        file_name=f"{business_name.replace(' ', '_')}_plan.pdf",
-                        mime="application/pdf"
-                    )
-        
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
+
+if st.session_state.plan:
+    # Initialize paths
+    docx_path, pdf_path = None, None
+    plan = st.session_state.plan
+    business_name = st.session_state.business_name
+    industry = st.session_state.industry
+    
+    try:
+        # Display results
+        tab1, tab2 = st.tabs(["Business Plan", "Raw Output"])
         
-        finally:
-            # Cleanup temporary files
-            for path in [docx_path, pdf_path]:
-                if path and os.path.exists(path):
-                    try:
-                        os.remove(path)
-                    except:
-                        pass  # Silent fail if file couldn't be deleted
+        with tab1:
+            st.subheader(f"{business_name} Business Plan")
+            st.markdown(f"**Industry:** {industry}")
+            st.markdown(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+            st.divider()
+            st.markdown(plan.replace('\n', '\n\n'))
+            
+        with tab2:
+            st.code(plan, language="markdown")
+        
+        # Export section
+        st.subheader("Export Options")
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            docx_path = export_to_docx(plan, business_name.replace(" ", "_"))
+            with open(docx_path, "rb") as f:
+                st.download_button(
+                    label="📥 Download DOCX",
+                    data=f,
+                    file_name=f"{business_name.replace(' ', '_')}_plan.docx",
+                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                )
+        
+        with col2:
+            pdf_path = export_to_pdf(plan, business_name.replace(" ", "_"))
+            with open(pdf_path, "rb") as f:
+                st.download_button(
+                    label="📥 Download PDF",
+                    data=f,
+                    file_name=f"{business_name.replace(' ', '_')}_plan.pdf",
+                    mime="application/pdf"
+                )
+                
+    except Exception as e:
+        st.error(f"An error occurred during display or export: {str(e)}")
+    
+    finally:
+        # Cleanup temporary files
+        for path in [docx_path, pdf_path]:
+            if path and os.path.exists(path):
+                try:
+                    os.remove(path)
+                except:
+                    pass  # Silent fail if file couldn't be deleted
 
 if __name__ == "__main__":
     # Create necessary directories
